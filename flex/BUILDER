@@ -1,0 +1,47 @@
+# BUILDER FILE
+
+PKG_NAME="flex"
+PKG_VER="2.6.4"
+PKG_DESC="The Fast Lexical Analyzer - scanner generator for lexing in C and C++."
+LICENSE=( BSD )
+URL=( http://flex.sourceforge.net )
+SOURCES=( https://github.com/westes/flex/releases/download/v${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 2882e3179748cc9f9c23ec593d6adc8d )
+DEPENDENCIES=( bison )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for compilation
+###################################################################
+prepare_pkg(){
+ 
+    cd $PKG_SRC/$DIR
+    PREFIX=$INSTALLS/${PKG_NAME}/${PKG_VER}
+    # First, fix a problem introduced with glibc-2.26
+    sed -i "/math.h/a #include <malloc.h>" src/flexdef.h
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    HELP2MAN=$(which true) \
+    ./configure --prefix=$PREFIX \
+                --docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
+    make
+    make check
+    make install
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+    ln -sv $PREFIX/bin/flex $PREFIX/bin/lex
+
+}
