@@ -30,7 +30,7 @@ config_and_build_pkg(){
     cd $PKG_SRC/$DIR
     
     # Configure Package
-    ./configure --prefix=$PREFIX
+    ./configure --prefix=$PREFIX \
                 --docdir=$PREFIX/share/doc/bison-${PKG_VER}
     
     # Compile the package
