@@ -20,7 +20,7 @@ prepare_pkg(){
 
     cd $PKG_SRC/$DIR
 
-    PREFIX=$INSTALLS/${PKG_NAME}/${PKG_VERSION}
+    PREFIX=$INSTALLS/${PKG_NAME}/${PKG_VER}
 
 }
 
@@ -33,7 +33,7 @@ config_and_build_pkg(){
     
     # Configure Package
     ./configure --prefix=$PREFIX \
-                --docdir=$PREFIX/share/doc/bison-${PKG_VER}
+                --docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
     
     # Compile the package
     make
