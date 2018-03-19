@@ -11,8 +11,6 @@ DEPENDENCIES=( )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="core"
 
-DIR=${PKG_NAME}-${PKG_VER}
-
 ###################################################################
 # Prepare Package for compilation
 ###################################################################
