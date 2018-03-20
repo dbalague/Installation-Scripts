@@ -7,7 +7,7 @@ LICENSE=( BSD )
 URL=( http://flex.sourceforge.net )
 SOURCES=( https://github.com/westes/flex/releases/download/v${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.gz )
 MD5SUM=( 2882e3179748cc9f9c23ec593d6adc8d )
-DEPENDENCIES=( bison )
+DEPENDENCIES=( bison/3.0.4 )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="core"
 
