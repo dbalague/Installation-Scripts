@@ -33,7 +33,6 @@ config_and_build_pkg(){
                 --docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
     make
     make check
-    make install
 
 }
 ###################################################################
@@ -42,6 +41,7 @@ config_and_build_pkg(){
 install_pkg()
 {
     cd $PKG_SRC/$DIR
+    make install
     ln -sv $PREFIX/bin/flex $PREFIX/bin/lex
 
 }
