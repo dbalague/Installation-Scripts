@@ -15,11 +15,7 @@ PKG_TYPE="core"
 # Prepare Package for compilation
 ###################################################################
 prepare_pkg(){
-
     cd $PKG_SRC/$DIR
-
-    PREFIX=$INSTALLS/${PKG_NAME}/${PKG_VER}
-
 }
 
 ###################################################################
