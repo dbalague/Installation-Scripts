@@ -1,0 +1,50 @@
+# BUILDER FILE
+
+PKG_NAME="gsl"
+PKG_VER="2.4"
+PKG_DESC="The GNU Scientific Library (GSL) is a numerical library for C and C++ programmers. It is free software under the GNU General Public License."
+LICENSE=( GPLv3 )
+URL="https://www.gnu.org/software/gsl/"
+SOURCES=( ftp://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( dba736f15404807834dc1c7b93e83b92 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="compiler"
+
+###################################################################
+# Prepare Package for compilation
+###################################################################
+prepare_pkg(){
+    cd $PKG_SRC/$DIR
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
