@@ -1,0 +1,57 @@
+# BUILDER FILE
+
+PKG_NAME="make"
+PKG_VER="1.15.1"
+PKG_DESC="Automake is a tool for automatically generating Makefile.in files compliant with the GNU Coding Standards. Automake requires the use of Autoconf."
+LICENSE=( GPLv3 )
+URL="https://www.gnu.org/software/automake/"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz )
+MD5SUM=( 24cd3501b6ad8cd4d7e2546f07e8b4d4 )
+DEPENDENCIES=( autoconf flex )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for compilation
+###################################################################
+prepare_pkg(){
+    cd $PKG_SRC/$DIR
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+		--docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
+    
+    # Compile the package
+    make
+    
+    if [ "$AS_BASE" = "true" ];
+	sed -i "s:./configure:LEXLIB=${PREFIX}/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
+    else
+	FLEX_VER=$(echo "SELECT version FROM packages WHERE pkgname = \"flex\" | sqlite3 ${DATABASE_PATH}/${DATABASE})
+        sed -i "s:./configure:LEXLIB=${ROOT_PATH}/flex/FLEX_VER/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
+    fi
+    
+    make -j4 check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}

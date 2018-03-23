@@ -1,0 +1,49 @@
+# BUILDER FILE
+
+PKG_NAME="autoconf"
+PKG_VER="2.69"
+PKG_DESC="Autoconf is an extensible package of M4 macros that produce shell scripts to automatically configure software source code packages."
+LICENSE=( GPLv3 )
+URL="https://www.gnu.org/software/autoconf/autoconf.html"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz )
+MD5SUM=( 50f97f4159805e374639a73e2636f22e )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for compilation
+###################################################################
+prepare_pkg(){
+    cd $PKG_SRC/$DIR
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX 
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
