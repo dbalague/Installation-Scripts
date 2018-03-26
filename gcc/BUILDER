@@ -1,0 +1,53 @@
+# BUILDER FILE
+# MAINTAINER: Daniel Balague
+
+PKG_NAME="gcc"
+PKG_VER="7.3.0"
+PKG_DESC="The GNU Compiler Collection includes front ends for C, C++, Objective-C, Fortran, Ada, and Go, as well as libraries for these languages (libstdc++,...). GCC was originally written as the compiler for the GNU operating system."
+LICENSE=( GPLv3 )
+URL="https://www.gnu.org/software/bison/"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.xz )
+MD5SUM=( be2da21680f27624f3a87055c4ba5af2 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for compilation
+###################################################################
+prepare_pkg(){
+    cd $PKG_SRC/$DIR
+    ./contrib/download_prerequisites
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+		--enable-languages=c,c++,fortran,go,objc,obj-c++ \
+		--disable-multilib \
+		--with-default-libstdcxx-abi=gcc4-compatible \
+		--with-system-zlib
+    
+    # Compile the package
+    make -j 36
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
