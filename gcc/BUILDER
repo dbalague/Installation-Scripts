@@ -29,7 +29,7 @@ config_and_build_pkg(){
     
     # Configure Package
     ./configure --prefix=$PREFIX \
-		--enable-languages=c,c++,fortran,go,objc,obj-c++ \
+		--enable-languages=c,c++,fortran \
 		--disable-multilib \
 		--with-default-libstdcxx-abi=gcc4-compatible \
 		--with-system-zlib
