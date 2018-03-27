@@ -31,7 +31,7 @@ config_and_build_pkg(){
     # Compile the package
     make
 
-    make check
+    #make check
 
 }
 
