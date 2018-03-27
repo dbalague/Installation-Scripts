@@ -35,7 +35,7 @@ config_and_build_pkg(){
     if [ "$AS_BASE" = "true" ]; then
 	sed -i "s:./configure:LEXLIB=${PREFIX}/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
     else
-	FLEX_VER=$(echo "SELECT version FROM packages WHERE pkgname = \"flex\" | sqlite3 ${DATABASE_PATH}/${DATABASE})
+	FLEX_VER=$(echo "SELECT version FROM packages WHERE pkgname = \"flex\";" | sqlite3 ${DATABASE_PATH}/${DATABASE})
         sed -i "s:./configure:LEXLIB=${ROOT_PATH}/flex/${FLEX_VER}/lib/libfl.a &:" t/lex-{clean,depend}-cxx.sh
     fi
     
