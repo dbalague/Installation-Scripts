@@ -1,6 +1,6 @@
 # BUILDER FILE
 
-PKG_NAME="make"
+PKG_NAME="automake"
 PKG_VER="1.15.1"
 PKG_DESC="Automake is a tool for automatically generating Makefile.in files compliant with the GNU Coding Standards. Automake requires the use of Autoconf."
 LICENSE=( GPLv3 )
