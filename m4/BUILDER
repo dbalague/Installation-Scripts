@@ -1,0 +1,40 @@
+# BUILDER FILE
+
+PKG_NAME="m4"
+PKG_VER="1.4.18"
+PKG_DESC="GNU M4 is an implementation of the traditional Unix macro processor."
+LICENSE=( GPLv3 )
+URL="http://www.gnu.org/software/m4/"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz )
+MD5SUM=( 730bb15d96fffe47e148d1e09235af82 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX
+    
+    # Compile the package
+    make
+    
+#    make -j4 check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+}
