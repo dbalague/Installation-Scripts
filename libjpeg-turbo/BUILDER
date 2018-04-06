@@ -1,0 +1,39 @@
+# BUILDER FILE
+
+PKG_NAME="libjpeg-turbo"
+PKG_VER="1.5.3"
+PKG_DESC="libjpeg-turbo is a JPEG image codec that uses SIMD instructions (MMX, SSE2, NEON, AltiVec) to accelerate baseline JPEG compression and decompression on x86, x86-64, ARM, and PowerPC systems."
+LICENSE=( BSD )
+URL=( https://sourceforge.net/projects/libjpeg-turbo/ )
+SOURCES=( http://downloads.sourceforge.net/libjpeg-turbo/libjpeg-turbo-${VER}.tar.gz )
+MD5SUM=( 7c82f0f6a3130ec06b8a4d0b321cbca3 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( yasm )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    NASM=yasm \
+    ./configure --prefix=$PREFIX \
+                --mandir=$PREFIX/share/man \
+                --with-jpeg8 \
+                --diable-static \
+                --docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
+    make
+
+    make test
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+    make install
+    ln -sv $PREFIX/bin/flex $PREFIX/bin/lex
+
+}

@@ -1,0 +1,33 @@
+# BUILDER FILE
+
+PKG_NAME="file"
+PKG_VER="5.32"
+PKG_DESC="The file command is "a file type guesser", that is, a command-line tool that tells you in words what kind of data a file contains."
+LICENSE=( "BSD, CDDL" )
+URL=( http://www.darwinsys.com/file/ )
+SOURCES=( ftp://ftp.astron.com/pub/file/file-${PKG_VER}.tar.gz )
+MD5SUM=( 4f2503752ff041895090ed6435610435 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    ./configure --prefix=$PREFIX
+
+    make
+    make check
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+    make install
+}

@@ -1,0 +1,51 @@
+# BUILDER FILE
+
+PKG_NAME="openjpeg"
+PKG_VER="1.5.2"
+PKG_DESC="Open-source C-Library for JPEG 2000"
+LICENSE=( BSD )
+URL="https://sourceforge.net/projects/openjpeg.mirror/"
+SOURCES=( "http://downloads.sourceforge.net/openjpeg.mirror/openjpeg-${VER}.tar.gz" )
+MD5SUM=( c41772c30fb1c272358b3707233134a1 )
+DEPENDENCIES=( libcurl littlecms libpng libtiff )
+MAKE_DEPENDENCIES=( automake )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for Compilation
+###################################################################
+prepare_pkg()
+{
+    cd $PKG_SRC/$DIR
+    autoreconf -f -i
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg()
+{
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}

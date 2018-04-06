@@ -1,0 +1,43 @@
+# BUILDER FILE
+
+PKG_NAME="texinfo"
+PKG_VER="6.5"
+PKG_DESC=""
+LICENSE=( GPL )
+URL="https://www.gnu.org/software/texinfo/"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz ) 
+MD5SUM=( 3715197e62e0e07f85860b3d7aab55ed )
+DEPENDENCIES=( zlib latex )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}

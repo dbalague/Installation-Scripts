@@ -1,0 +1,34 @@
+# BUILDER FILE
+
+PKG_NAME="zlib"
+PKG_VER="1.2.11"
+PKG_DESC="A Massively Spiffy Yet Delicately Unobtrusive Compression Library"
+LICENSE=( zlib_license )
+URL=( http://zlib.net )
+SOURCES=( http://zlib.net/zlib-${VER}.tar.xz )
+MD5SUM=( 85adef240c5f370b308da8c938951a68 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    ./configure --prefix=$PREFIX
+                
+    make
+    make check
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+    make install
+
+}

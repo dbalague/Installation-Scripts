@@ -1,0 +1,44 @@
+# BUILDER FILE
+
+PKG_NAME="yasm"
+PKG_VER="1.3.0"
+PKG_DESC="Yasm is a complete rewrite of the NASM assembler under the “new” BSD License"
+LICENSE=( BSD )
+URL=( http://yasm.tortall.net )
+SOURCES=( http://www.tortall.net/projects/yasm/releases/yasm-${PKG_VER}.tar.gz )
+MD5SUM=( fc9e586751ff789b34b1f21d572d96af )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for compilation
+###################################################################
+prepare_pkg(){
+ 
+    cd $PKG_SRC/$DIR
+    # This sed prevents it compiling 2 programs (vsyasm and ytasm) that are only of use on Microsoft Windows
+    sed -i 's#) ytasm.*#)#' Makefile.in &&
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    ./configure --prefix=$PREFIX
+
+    make
+    make check
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+    make install
+
+}
