@@ -34,6 +34,5 @@ install_pkg()
 {
     cd $PKG_SRC/$DIR
     make install
-    ln -sv $PREFIX/bin/flex $PREFIX/bin/lex
 
 }
