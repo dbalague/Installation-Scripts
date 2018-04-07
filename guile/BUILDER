@@ -1,0 +1,57 @@
+# BUILDER FILE
+
+PKG_NAME="guile"
+PKG_VER="1.8.8"
+PKG_DESC="Guile contains an efficient compiler and virtual machine. It can be used out of the box to write programs in Scheme, or can easily be integrated with C and C++ programs."
+LICENSE=( GPL )
+URL="https://www.gnu.org/software/guile"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz ) 
+MD5SUM=( 18661a8fdfef13e2fcb7651720aa53f3 )
+DEPENDENCIES=( gmp libtool libunistring pkg-config libffi readline )
+MAKE_DEPENDENCIES=( binutils )
+PKG_TYPE="core"
+
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg()
+{
+    cd $PKG_SRC/$DIR
+    sed -i -e '20,$ d' \
+           -e 's|slib)|&)\n(load-from-path "slib/guile.init")|' \
+        ice-9/slib.scm
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    CPPFLAGS="-Wno-unused-but-set-variable" \
+    ./configure --prefix=$PREFIX
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+    find examples -name "Makefile*" -exec rm {} \;
+    install -v -m755 -d ${PREFIX}/doc/${PKG_NAME}-${PKG_VER}
+    cp -v -R examples   ${PREFIX}/doc/${PKG_NAME}-${PKG_VER}
+
+}
