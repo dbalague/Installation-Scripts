@@ -1,0 +1,51 @@
+# BUILDER FILE
+
+PKG_NAME="binutils"
+PKG_VER="2.30"
+PKG_DESC="The GNU Binutils are a collection of binary tools."
+LICENSE=( GPL )
+URL="https://www.gnu.org/software/binutils"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz ) 
+MD5SUM=( ffc476dd46c96f932875d1b2e27e929f )
+DEPENDENCIES=( flex bison zlib mpc mpfr gmp )
+MAKE_DEPENDENCIES=( binutils pkg-config )
+PKG_TYPE="core"
+
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --enable-gold \
+                --enable-ld=default \
+                --enable-plugins \
+                --enable-shared \
+                --disable-werror \
+                --with-system-zlib \
+                --with-mpc=
+                --with-mpfr=
+                --with-gmp=
+
+    
+    # Compile the package
+    make tooldir=$PREFIX
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}

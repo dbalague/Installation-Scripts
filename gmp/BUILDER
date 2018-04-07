@@ -1,0 +1,55 @@
+# BUILDER FILE
+
+PKG_NAME="gmp"
+PKG_VER="6.1.2"
+PKG_DESC="GMP is a free library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating-point numbers."
+LICENSE=( GPL )
+URL="https://www.gnu.org/software/gmp"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz ) 
+MD5SUM=( f58fa8001d60c4c77595fbbb62b63c1d )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( binutils )
+PKG_TYPE="core"
+
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg()
+{
+    cd $PKG_SRC/$DIR
+    # Generate generic libraries
+    cp -v configfsf.guess config.guess
+    cp -v configfsf.sub   config.sub
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --enable-cxx \
+                --disable-static \
+                --doc-dir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VERSION}
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
