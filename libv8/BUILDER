@@ -1,0 +1,190 @@
+# BUILDER FILE
+
+PKG_NAME="libv8"
+PKG_VER="3.14.5"
+PKG_DESC="A fast and modern javascript engine (old 3.14 version required R package \\\"V8\\\")"
+LICENSE=( BSD )
+URL=( http://code.google.com/p/v8 )
+SOURCES=( "http://commondatastorage.googleapis.com/chromium-browser-official/v8-${PKG_VER}.tar.bz2"
+"git+https://chromium.googlesource.com/chromium/tools/depot_tools.git"
+"git+https://chromium.googlesource.com/external/gyp"
+"AUR+https://aur.archlinux.org/v8-${PKG_VER%.*}.git"
+"AUR+https://aur.archlinux.org/v8.git" )
+MD5SUM=( 'be8f17f7cfc2885ecc67ef6b367f2c0d'
+         'SKIP'
+         'SKIP'
+         'SKIP' 
+         'SKIP' )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for compilation
+###################################################################
+prepare_pkg(){
+
+    DIR="${PKG_NAME#lib}-${PKG_VER}"
+    ARCH="x64"
+    cd ${PKG_SRC}/${DIR}
+
+    # clang_base_path: Set clang path when not using the clang bundled with V8.
+    V8_CLANG_PATH="/usr/"
+    
+    # is_clang: Set to true when compiling with the Clang compiler. Typically this
+    # is used to configure warnings.
+    V8_IS_CLANG=false
+    
+    # is_component_build: Component build. Setting to true compiles targets declared
+    # as "components" as shared libraries loaded dynamically.
+    # This speeds up development time.
+    # When false, components will be linked statically.
+    V8_COMPONENT_BUILD=true
+    
+    # is_debug: Enabling official builds (V8_OFFICIAL_BUILD) automatically sets is_debug to false.
+    V8_DEBUG=false
+    
+    # is_official_build: Set to enable the official build level of optimization.
+    # This has nothing to do with branding, but enables an additional level of
+    # optimization above release (!is_debug). This might be better expressed
+    # as a tri-state (debug, release, official) but for historical reasons there
+    # are two separate flags.
+    V8_OFFICIAL_BUILD=false
+    
+    # v8_enable_i18n_support: Enable ECMAScript Internationalization API.
+    # Enabling this feature will add a dependency on the ICU library.
+    V8_I18N_SUPPORT=true
+    
+    # v8_use_external_startup_data: Use external files for startup data blobs:
+    # the JS builtins sources and the start snapshot.
+    V8_USE_EXTERNAL_STARTUP_DATA=""
+    
+    # Use sysroot
+    V8_USE_SYSROOT=false
+    
+    # treat_warnings_as_errors: Default to warnings as errors for default workflow,
+    # where we catch warnings with known toolchains. Allow overriding this e.g.
+    # for Chromium builds on Linux that could use a different version of the compiler.
+    # With GCC, warnings in no-Chromium code are always not treated as errors.
+    V8_WARNINGS_AS_ERRORS=false
+
+    echo "Creating Python Virtual Environment"
+    virtualenv -q venv
+    echo "Activating Python Virtual Environment"
+    source venv/bin/activate > /dev/null
+    echo "Installing dependencies in the Virtual Environment..."
+    pip install colorama -q
+    #pip install pylint -q
+    pip install lazy-object-proxy -q
+    pip install singledispatch -q
+    pip install wrapt -q
+
+    # Build GYP to generate the project
+    cd ${PKG_SRC}/gyp
+    echo $(git rev-list --count master).$(git rev-parse --short master)
+    python setup.py install
+    
+    # Patch pc files
+    sed "s/@VERSION@/${PKG_VER}/g" -i "${PKG_SRC}/v8.pc"
+    sed "s/@VERSION@/${PKG_VER}/g" -i "${PKG_SRC}/v8_libbase.pc"
+    sed "s/@VERSION@/${PKG_VER}/g" -i "${PKG_SRC}/v8_libplatform.pc"
+
+    export PATH=${PKG_SRC}/depot_tools:"$PATH"
+    export GYP_GENERATORS=ninja
+
+    cd ${PKG_SRC}/${DIR}
+
+    find build/ test/ tools/ src/ -type f \
+        -exec sed -e 's_^#!/usr/bin/env python$_&2_' \
+        -e 's_^\(#!/usr/bin/python2\).[45]$_\1_' \
+        -e 's_^#!/usr/bin/python$_&2_' \
+        -e "s_'python'_'python2'_" -i {} \;
+    sed -i 's/python /python2 /' Makefile
+
+    echo "Applying patch     p1"
+    patch -p1 <   ${PKG_SRC}/0001_kfreebsd.patch
+    echo "Applying patch     p2"
+    patch -p1 <   ${PKG_SRC}/0002_mips.patch
+    echo "Applying patch     p3"
+    patch -p1 <   ${PKG_SRC}/0002_mips_r15102_backport.patch
+    echo "Applying patch     p4"
+    patch -p1 <   ${PKG_SRC}/0002_mips_r19121_backport.patch
+    echo "Applying patch     p5"
+    patch -p1 <   ${PKG_SRC}/0003_armv4t_disable_vfp.patch
+    echo "Applying patch     p6"
+    patch -p1 <   ${PKG_SRC}/0004_hurd.patch
+    echo "Applying patch     p7"
+    patch -p1 <   ${PKG_SRC}/0008_mksnapshot_stdout.patch
+    echo "Applying patch     p8"
+    patch -p1 <   ${PKG_SRC}/0011_use_system_gyp.patch
+    echo "Applying patch     p9"
+    patch -p1 <   ${PKG_SRC}/0012_loongson_force_cache_flush.patch
+    echo "Applying patch     p10"
+    patch -p1 <   ${PKG_SRC}/0013_gcc_48_compat.patch
+    echo "Applying patch     p11"
+    patch -p1 <   ${PKG_SRC}/0014_cve_2013_6639_6640.patch
+    echo "Applying patch     p12"
+    patch -p1 <   ${PKG_SRC}/0015-Backport-Utils-ApiCheck.patch
+    echo "Applying patch     p13"
+    patch -p1 <   ${PKG_SRC}/0016-remove-this-null.patch
+    echo "Applying patch     p14"
+    patch -p1 <   ${PKG_SRC}/0017_increase_stack_size_for_test.patch
+    echo "Applying patch     p16"
+    patch -p1 <   ${PKG_SRC}/fix_CVE-2014-5256.patch
+    echo "Applying patch     p17"
+    patch -p1 <   ${PKG_SRC}/nodejsREPLACE_INVALID_UTF8.patch
+    echo "Applying patch     p8"
+    patch -p1 <   ${PKG_SRC}/strict_overflow.patch
+    echo "Applying patch     p19"
+    patch -p1 <   ${PKG_SRC}/dont-assume-hardfloat-means-vfpv3.diff
+    echo "Applying patch     p20"
+    patch -p1 <   ${PKG_SRC}/gcc7-fix.patch
+    
+    
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg()
+{
+    cd ${PKG_SRC}/${DIR}
+
+    export CXXFLAGS="${CXXFLAGS} -fno-delete-null-pointer-checks  -std=c++98"
+
+    export GYPFLAGS="-Dhost_arch=$ARCH -DOS=linux"
+
+    export PYTHON=python2
+
+    make -j 4 $ARCH.release library=shared snapshot=off soname_version=$pkgver OS=linux V=1
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+
+    install -d ${PREFIX}/bin
+    install -Dm755 out/$ARCH.release/d8 ${PREFIX}/bin/d8
+
+    install -d ${PREFIX}/lib
+    install -Dm755 out/$ARCH.release/lib.target/libv8.so ${PREFIX}/lib/libv8.so.${PKG_VER}
+
+    install -d ${PREFIX}/include
+    install -Dm644 include/*.h ${PREFIX}/include
+
+    install -d ${PREFIX}/share/licenses/v8
+    install -m644 LICENSE* ${PREFIX}/share/licenses/v8
+
+    cd ${PREFIX}/lib
+    ln -s -T libv8.so.${PKG_VER} libv8.so
+
+    # Install the pc files
+    install -d ${PREFIX}/lib/pkgconfig
+    install -m644 ${PKG_SRC}/v8.pc ${PREFIX}/lib/pkgconfig
+    install -m644 ${PKG_SRC}/v8_libbase.pc ${PREFIX}/lib/pkgconfig
+    install -m644 ${PKG_SRC}/v8_libplatform.pc ${PREFIX}/lib/pkgconfig
+
+
+}
