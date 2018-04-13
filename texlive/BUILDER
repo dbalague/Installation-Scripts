@@ -6,7 +6,8 @@ PKG_DESC="TeX Live is an easy way to get up and running with the TeX document pr
 LICENSE=( "LaTeX Project Public License (LPPL), GPL (Version 2)" )
 URL=( https://www.tug.org/texlive/ )
 SOURCES=( ftp://tug.org/texlive/historic/2017//install-tl-unx.tar.gz texlive.profile )
-MD5SUM=( 8f8fc301514c08a89a2e97197369c648 )
+MD5SUM=( 8f8fc301514c08a89a2e97197369c648 
+         bb6d3303ccb97f891230af6a0cf911b2 )
 DEPENDENCIES=( )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="core"
