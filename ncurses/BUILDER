@@ -56,9 +56,10 @@ install_pkg()
 
     # Trick applications expect the linker to be able to find non-wide-character Ncurses libraries into linking with wide-character libraries by means of symlinks and linker scripts
 
+    cd ${PREFIX}/lib
     for lib in ncurses form panel menu ; do
-        echo "INPUT(-l${lib}w)" > /usr/lib/lib${lib}.so
-        ln -sfv ${lib}w.pc        /usr/lib/pkgconfig/${lib}.pc
+        echo "INPUT(-l${lib}w)" > ${PREFIX}/lib/lib${lib}.so
+        ln -sfv ${PREFIX}/lib/pkgconfig/${lib}w.pc        ${PREFIX}/lib/pkgconfig/${lib}.pc
     done
 
 }
