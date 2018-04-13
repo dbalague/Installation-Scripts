@@ -1,0 +1,55 @@
+# BUILDER FILE
+
+PKG_NAME="ncurses"
+PKG_VER="6.1"
+PKG_DESC="The ncurses (new curses) library is a free software emulation of curses in System V Release 4.0 (SVr4), and more."
+LICENSE=( GPLv3 )
+URL="https://www.gnu.org/software/ncurses/"
+SOURCES=( http://ftp.gnu.org/gnu//${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 98c889aaf8d23910d2b92d65be2e737a )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+
+###################################################################
+# Prepare Package for Compilation
+###################################################################
+prepare_pkg()
+{
+    cd $PKG_SRC/$DIR
+    sed -i '/LIBTOOL_INSTALL/d' c++/Makefile.in
+    
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=${PREFIX}           \
+                --with-shared                \
+                --with-libtool               \
+                --mandir=${PREFIX}/share/man
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+    ln -s ${PREFIX}/lib/libncurses.so ${PREFIX}/lib/libcurses.so
+    ln -s ${PREFIX}/lib/libncurses++.so ${PREFIX}/lib/libcurses++.so
+
+}
