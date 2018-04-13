@@ -26,6 +26,6 @@ config_and_build_pkg(){
 install_pkg()
 {
     cd $PKG_SRC/$DIR
-    install-tl --profile=../texlive.profile
+    ./install-tl --profile=../texlive.profile
 
 }
