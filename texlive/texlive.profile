@@ -1,11 +1,3 @@
-selected_scheme scheme-full
-TEXDIR ${INSTALLS}/texlive/${PKG_VER}/portable
-TEXMFCONFIG $TEXMFSYSCONFIG
-TEXMFHOME $TEXMFLOCAL
-TEXMFLOCAL ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-local
-TEXMFSYSCONFIG ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-config
-TEXMFSYSVAR ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-var
-TEXMFVAR $TEXMFSYSVAR
 binary_x86_64-linux 1
 collection-basic 1
 collection-bibtexextra 1
