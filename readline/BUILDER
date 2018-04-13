@@ -19,6 +19,8 @@ prepare_pkg()
 {
     cd $PKG_SRC/$DIR
     sed -i s/mawk// configure
+    sed -i '/MV.*old/d' Makefile.in
+    sed -i '/{OLDSUFF}/c:' support/shlib-install
     
 }
 ###################################################################
@@ -31,6 +33,7 @@ config_and_build_pkg(){
     # Configure Package
     ./configure --prefix=${PREFIX}    \
                 --disable-static      \
+                --with-curses         \
                 --docdir=${PREFIX}/share/doc/readline-7.0
     
     # Compile the package
