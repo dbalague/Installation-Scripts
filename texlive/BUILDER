@@ -25,12 +25,12 @@ config_and_build_pkg(){
     echo"
 selected_scheme scheme-full
 TEXDIR ${INSTALLS}/texlive/${PKG_VER}/portable
-TEXMFCONFIG $TEXMFSYSCONFIG
-TEXMFHOME $TEXMFLOCAL
+TEXMFCONFIG \$TEXMFSYSCONFIG
+TEXMFHOME \$TEXMFLOCAL
 TEXMFLOCAL ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-local
 TEXMFSYSCONFIG ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-config
 TEXMFSYSVAR ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-var
-TEXMFVAR $TEXMFSYSVAR" > aux
+TEXMFVAR \$TEXMFSYSVAR" > aux
     cat ../texlive.profile >> aux
     mv aux texlive.profile
 
