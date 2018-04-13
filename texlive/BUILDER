@@ -23,10 +23,10 @@ config_and_build_pkg(){
 
     # Set the profile file for installing texlive
     echo "selected_scheme scheme-full
-TEXDIR ${INSTALLS}/texlive/${PKG_VER}/portable
-TEXMFLOCAL ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-local
-TEXMFSYSCONFIG ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-config
-TEXMFSYSVAR ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-var
+TEXDIR ${INSTALLS}/texlive/${PKG_VER}
+TEXMFLOCAL ${INSTALLS}/texlive/${PKG_VER}/texmf-local
+TEXMFSYSCONFIG ${INSTALLS}/texlive/${PKG_VER}/texmf-config
+TEXMFSYSVAR ${INSTALLS}/texlive/${PKG_VER}/texmf-var
 TEXMFCONFIG \$TEXMFSYSCONFIG
 TEXMFHOME \$TEXMFLOCAL
 TEXMFVAR \$TEXMFSYSVAR" > aux
@@ -42,4 +42,10 @@ install_pkg()
     cd $PKG_SRC/$DIR
     ./install-tl --profile=../texlive.profile
 
+}
+post_install()
+{
+    # Fix module file to adapt it to the texlive direcotry structure
+    sed -e 's#,"bin")#,"bin/x86_64-linux")#" \
+        -i ${USER_MODULEFILE_PATH}/${PKG_NAME}/${PKG_VER}.lua
 }
