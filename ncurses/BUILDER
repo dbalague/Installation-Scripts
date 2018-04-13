@@ -32,6 +32,9 @@ config_and_build_pkg(){
     ./configure --prefix=${PREFIX}           \
                 --with-shared                \
                 --with-libtool               \
+                --with-cxx-shared            \
+                --enable-pc-files            \
+                --enable-widec               \
                 --mandir=${PREFIX}/share/man
     
     # Compile the package
