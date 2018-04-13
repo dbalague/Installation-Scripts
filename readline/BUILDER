@@ -1,0 +1,52 @@
+# BUILDER FILE
+
+PKG_NAME="readline"
+PKG_VER="7.0"
+PKG_DESC=""
+LICENSE=( GPLv3 )
+URL="https://tiswww.case.edu/php/chet/readline/rltop.html"
+SOURCES=( ftp://ftp.cwru.edu/pub/bash/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 205b03a87fc83dab653b628c59b9fc91 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+
+###################################################################
+# Prepare Package for Compilation
+###################################################################
+prepare_pkg()
+{
+    cd $PKG_SRC/$DIR
+    sed -i s/mawk// configure
+    
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=${PREFIX}    \
+                --disable-static      \
+                --docdir=${PREFIX}/share/doc/readline-7.0
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
