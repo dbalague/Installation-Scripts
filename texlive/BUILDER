@@ -22,7 +22,7 @@ config_and_build_pkg(){
     cd ${PKG_SRC}
 
     # Set the profile file for installing texlive
-    echo" selected_scheme scheme-full
+    echo "selected_scheme scheme-full
 TEXDIR ${INSTALLS}/texlive/${PKG_VER}/portable
 TEXMFLOCAL ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-local
 TEXMFSYSCONFIG ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-config
