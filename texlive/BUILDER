@@ -18,6 +18,8 @@ PKG_TYPE="core"
 config_and_build_pkg(){
     
     DIR=install-tl-${PKG_VER}
+   
+    cd ${PKG_SRC}
 
     # Set the profile file for installing texlive
     echo"
@@ -28,8 +30,8 @@ TEXMFHOME $TEXMFLOCAL
 TEXMFLOCAL ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-local
 TEXMFSYSCONFIG ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-config
 TEXMFSYSVAR ${INSTALLS}/texlive/${PKG_VER}/portable/texmf-var
-TEXMFVAR $TEXMFSYSVAR" > ../aux
-    cat ../texlive.profile >> ../aux
+TEXMFVAR $TEXMFSYSVAR" > aux
+    cat ../texlive.profile >> aux
     mv aux texlive.profile
 
 }
