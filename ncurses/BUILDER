@@ -35,8 +35,9 @@ config_and_build_pkg(){
                 --with-cxx-shared            \
                 --enable-pc-files            \
                 --enable-widec               \
-                --mandir=${PREFIX}/share/man
-    
+                --mandir=${PREFIX}/share/man \
+                --with-pkg-config-libdir=${PREFIX}/lib/pkgconfig
+
     # Compile the package
     make
 
