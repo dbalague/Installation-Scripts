@@ -53,7 +53,12 @@ install_pkg()
 
     # Install the package
     make install
-    ln -s ${PREFIX}/lib/libncurses.so ${PREFIX}/lib/libcurses.so
-    ln -s ${PREFIX}/lib/libncurses++.la ${PREFIX}/lib/libcurses++.so
+
+    # Trick applications expect the linker to be able to find non-wide-character Ncurses libraries into linking with wide-character libraries by means of symlinks and linker scripts
+
+    for lib in ncurses form panel menu ; do
+        echo "INPUT(-l${lib}w)" > /usr/lib/lib${lib}.so
+        ln -sfv ${lib}w.pc        /usr/lib/pkgconfig/${lib}.pc
+    done
 
 }
