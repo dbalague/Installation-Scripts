@@ -7,7 +7,7 @@ LICENSE=( GPLv3 )
 URL="https://tiswww.case.edu/php/chet/readline/rltop.html"
 SOURCES=( ftp://ftp.cwru.edu/pub/bash/${PKG_NAME}-${PKG_VER}.tar.gz )
 MD5SUM=( 205b03a87fc83dab653b628c59b9fc91 )
-DEPENDENCIES=( )
+DEPENDENCIES=( ncurses )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="core"
 
@@ -34,7 +34,7 @@ config_and_build_pkg(){
     ./configure --prefix=${PREFIX}    \
                 --disable-static      \
                 --with-curses         \
-                --docdir=${PREFIX}/share/doc/readline-7.0
+                --docdir=${PREFIX}/share/doc/${PKG_NAME}-${PKG_VER}
     
     # Compile the package
     make
