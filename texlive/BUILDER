@@ -7,7 +7,7 @@ LICENSE=( "LaTeX Project Public License (LPPL), GPL (Version 2)" )
 URL=( https://www.tug.org/texlive/ )
 SOURCES=( ftp://tug.org/texlive/historic/2017//install-tl-unx.tar.gz texlive.profile )
 MD5SUM=( 8f8fc301514c08a89a2e97197369c648 
-         b0ac1be907748cd7289820ecd303ddf6 )
+         7bdd0474512a2d7908ca541d773208a8 )
 DEPENDENCIES=( )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="core"
