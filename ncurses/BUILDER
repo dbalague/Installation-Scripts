@@ -50,6 +50,6 @@ install_pkg()
     # Install the package
     make install
     ln -s ${PREFIX}/lib/libncurses.so ${PREFIX}/lib/libcurses.so
-    ln -s ${PREFIX}/lib/libncurses++.so ${PREFIX}/lib/libcurses++.so
+    ln -s ${PREFIX}/lib/libncurses++.la ${PREFIX}/lib/libcurses++.so
 
 }
