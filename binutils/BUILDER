@@ -26,11 +26,7 @@ config_and_build_pkg(){
                 --enable-plugins \
                 --enable-shared \
                 --disable-werror \
-                --with-system-zlib \
-                --with-mpc=
-                --with-mpfr=
-                --with-gmp=
-
+                --with-system-zlib
     
     # Compile the package
     make tooldir=$PREFIX
