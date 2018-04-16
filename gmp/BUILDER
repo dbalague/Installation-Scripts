@@ -55,7 +55,7 @@ install_pkg()
     make install
 
     # Install a PC File
-    sed -e "s:PREFIX:$PREFIX:" -i gmp.pc
+    sed -e "s:PREFIX:$PREFIX:" -i ../gmp.pc
     install -d ${PREFIX}/lib/pkgconfig
     install -m644 ${PKG_SRC}/gmp.pc ${PREFIX}/lib/pkgconfig
 
