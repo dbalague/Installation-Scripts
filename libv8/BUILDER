@@ -86,8 +86,11 @@ prepare_pkg(){
     
     # Patch pc files
     sed "s/@VERSION@/${PKG_VER}/g" -i "${PKG_SRC}/v8.pc"
+    sed "s:/usr:${PREFIX}:g" -i "${PKG_SRC}/v8.pc"
     sed "s/@VERSION@/${PKG_VER}/g" -i "${PKG_SRC}/v8_libbase.pc"
+    sed "s:/usr:${PREFIX}:g" -i "${PKG_SRC}/v8_libbase.pc"
     sed "s/@VERSION@/${PKG_VER}/g" -i "${PKG_SRC}/v8_libplatform.pc"
+    sed "s:/usr:${PREFIX}:g" -i "${PKG_SRC}/v8_libplatform.pc"
 
     export PATH=${PKG_SRC}/depot_tools:"$PATH"
     export GYP_GENERATORS=ninja
