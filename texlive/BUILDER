@@ -23,10 +23,10 @@ config_and_build_pkg(){
 
     # Set the profile file for installing texlive
     echo "selected_scheme scheme-full
-TEXDIR ${INSTALLS}/texlive/${PKG_VER}
-TEXMFLOCAL ${INSTALLS}/texlive/${PKG_VER}/texmf-local
-TEXMFSYSCONFIG ${INSTALLS}/texlive/${PKG_VER}/texmf-config
-TEXMFSYSVAR ${INSTALLS}/texlive/${PKG_VER}/texmf-var
+TEXDIR ${PREFIX}/texlive/${PKG_VER}
+TEXMFLOCAL ${PREFIX}/texlive/${PKG_VER}/texmf-local
+TEXMFSYSCONFIG ${PREFIX}/texlive/${PKG_VER}/texmf-config
+TEXMFSYSVAR ${PREFIX}/texlive/${PKG_VER}/texmf-var
 TEXMFCONFIG \$TEXMFSYSCONFIG
 TEXMFHOME \$TEXMFLOCAL
 TEXMFVAR \$TEXMFSYSVAR" > aux
