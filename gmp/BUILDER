@@ -34,7 +34,7 @@ config_and_build_pkg(){
     ./configure --prefix=$PREFIX \
                 --enable-cxx \
                 --disable-static \
-                --doc-dir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VERSION}
+                --docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
     
     # Compile the package
     make
