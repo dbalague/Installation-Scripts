@@ -8,7 +8,7 @@ URL="https://www.gnu.org/software/binutils"
 SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz ) 
 MD5SUM=( ffc476dd46c96f932875d1b2e27e929f )
 DEPENDENCIES=( flex bison zlib mpc mpfr gmp )
-MAKE_DEPENDENCIES=( binutils pkg-config )
+MAKE_DEPENDENCIES=( pkg-config )
 PKG_TYPE="core"
 
 
