@@ -5,8 +5,10 @@ PKG_VER="6.1.2"
 PKG_DESC="GMP is a free library for arbitrary precision arithmetic, operating on signed integers, rational numbers, and floating-point numbers."
 LICENSE=( GPL )
 URL="https://www.gnu.org/software/gmp"
-SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz ) 
-MD5SUM=( f58fa8001d60c4c77595fbbb62b63c1d )
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz 
+          gmp.pc ) 
+MD5SUM=( f58fa8001d60c4c77595fbbb62b63c1d
+         35f0e86a6dc9500ee25c52008fa4f737 )
 DEPENDENCIES=( )
 MAKE_DEPENDENCIES=( binutils )
 PKG_TYPE="core"
@@ -51,5 +53,10 @@ install_pkg()
 
     # Install the package
     make install
+
+    # Install a PC File
+    sed -e "s:PREFIX:$PREFIX:" -i gmp.pc
+    install -d ${PREFIX}/lib/pkgconfig
+    install -m644 ${PKG_SRC}/gmp.pc ${PREFIX}/lib/pkgconfig
 
 }
