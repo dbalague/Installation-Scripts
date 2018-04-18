@@ -13,18 +13,6 @@ DEPENDENCIES=( gmp )
 MAKE_DEPENDENCIES=( binutils )
 PKG_TYPE="core"
 
-
-###################################################################
-# Prepare Package for Configuration
-###################################################################
-prepare_pkg()
-{
-    cd $PKG_SRC/$DIR
-    # Generate generic libraries
-    cp -v configfsf.guess config.guess
-    cp -v configfsf.sub   config.sub
-}
-
 ###################################################################
 # Configure and Build Package
 ###################################################################
