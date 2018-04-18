@@ -1,0 +1,10 @@
+prefix=PREFIX
+exec_prefix=${prefix}
+libdir=PREFIX/lib
+includedir=${prefix}/include
+
+Name: mpfr
+Description: The MPFR library is a C library for multiple-precision floating-point computations with correct rounding
+Version: @VERSION@
+Libs: -L${libdir} 
+Cflags: -I${includedir}

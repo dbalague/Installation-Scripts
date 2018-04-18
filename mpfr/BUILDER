@@ -1,0 +1,60 @@
+# BUILDER FILE
+
+PKG_NAME="mpfr"
+PKG_VER="4.0.1"
+PKG_DESC="The MPFR library is a C library for multiple-precision floating-point computations with correct rounding."
+LICENSE=( GPLv3 )
+URL="http://www.mpfr.org"
+SOURCES=( http://www.mpfr.org/${PKG_NAME}-${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.xz 
+          mpfr.pc ) 
+MD5SUM=( b8dd19bd9bb1ec8831a6a582a7308073 
+         4f4f2cd8edaf0949d4d0303b9dea2e2f )
+DEPENDENCIES=( gmp )
+MAKE_DEPENDENCIES=( binutils )
+PKG_TYPE="core"
+
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg()
+{
+    cd $PKG_SRC/$DIR
+    # Generate generic libraries
+    cp -v configfsf.guess config.guess
+    cp -v configfsf.sub   config.sub
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static \
+                --enable-thread-safe \
+                --with-gmp=$(pkg-config --variable=prefix gmp) \
+                --docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
