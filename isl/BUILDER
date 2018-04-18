@@ -1,0 +1,43 @@
+# BUILDER FILE
+
+PKG_NAME="isl"
+PKG_VER="0.16.1"
+PKG_DESC="isl is a library for manipulating sets and relations of integer points bounded by linear constraints."
+LICENSE=( MIT )
+URL="http://isl.gforge.inria.fr"
+SOURCES=( http://isl.gforge.inria.fr/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( a492b1c5bdeb3dda6bb25af4ee8eedfa )
+DEPENDENCIES=( gmp )
+MAKE_DEPENDENCIES=( binutils )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --with-gmp-prefix=$(pkg-config --variable=prefix gmp) \
+    
+    # Compile the package
+    make -j 4
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
