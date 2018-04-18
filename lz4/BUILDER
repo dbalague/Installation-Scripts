@@ -1,0 +1,40 @@
+# BUILDER FILE
+
+PKG_NAME="lz4"
+PKG_VER="1.8.1"
+PKG_DESC="LZ4 is lossless compression algorithm, providing compression speed at 400 MB/s per core, scalable with multi-cores CPU."
+LICENSE=( BSD )
+URL=( http://www.lz4.org/ )
+SOURCES=( https://github.com/lz4/lz4/archive/v${PKG_VER}.tar.gz )
+MD5SUM=( 343538e69ba752a386c669b1a28111e2 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    # do not use the main makefile, it calls sub make with -e
+    # exported CLFAGS by makepkg break the version. see FS#50071
+    cd ${PKG_SRC}/${DIR}
+    make -C lib PREFIX=${PREFIX} CFLAGS="$CFLAGS -fPIC"
+    make -C programs PREFIX=${PREFIX} lz4 lz4c
+
+    #Test
+    rm -f passwd.lz4
+    ./programs/lz4 /etc/passwd passwd.lz4
+    ./programs/lz4 -d passwd.lz4 passwd
+    diff -q /etc/passwd passwd
+    rm passwd
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd ${PKG_SRC}/${DIR}
+    make install PREFIX=${PREFIX}
+}
