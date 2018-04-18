@@ -16,6 +16,7 @@ PKG_TYPE="core"
 ###################################################################
 config_and_build_pkg(){
 
+    cd ${PKG_SRC}/${DIR}
     ./configure --prefix=${PREFIX}    \
                 --disable-static \
                 --docdir=${PREFIX}/share/doc/${PKG_NAME}-${PKG_VER}    
