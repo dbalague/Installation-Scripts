@@ -1,0 +1,37 @@
+# BUILDER FILE
+
+PKG_NAME="lzo"
+PKG_VER="2.10"
+PKG_DESC=""
+LICENSE=( GPLv2 )
+URL=( http://www.oberhumer.com/opensource/lzo )
+SOURCES=( http://www.oberhumer.com/opensource/lzo/download/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 39d3f3f9c55c87b1e5d6888e1420f4b5 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd ${PKG_SRC}/${DIR}
+    ./configure --prefix=${PREFIX}               \
+                --enable-shared                  \
+                --disable-static                 \
+                --docdir=${PREFIX}/share/doc/${PKG_NAME}-${PKG_VER}
+
+    make
+
+    make check
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+     cd ${PKG_SRC}/${DIR}
+     make install
+}
