@@ -1,0 +1,35 @@
+# BUILDER FILE
+
+PKG_NAME="xz"
+PKG_VER="5.2.3"
+PKG_DESC="XZ Utils is free general-purpose data compression software with a high compression ratio."
+LICENSE=( GPL )
+URL=( http://tukaani.org/xz )
+SOURCES=( http://tukaani.org/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz )
+MD5SUM=( 60fb79cab777e3f71ca43d298adacbd5 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+
+    ./configure --prefix=${PREFIX}    \
+                --disable-static \
+                --docdir=${PREFIX}/share/doc/${PKG_NAME}-${PKG_VER}    
+
+    make
+
+    make check
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd ${PKG_SRC}/${DIR}
+    make install 
+}
