@@ -45,4 +45,11 @@ install_pkg()
     # Install the package
     make install
 
+    # Install a PC File
+    sed -e "s:PREFIX:$PREFIX:" -i ../mpfr.pc
+    sed "s:@VERSION@:${PKG_VER}:g" -i ../mpfr.pc
+
+    install -d ${PREFIX}/lib/pkgconfig
+    install -m644 ${PKG_SRC}/mpfr.pc ${PREFIX}/lib/pkgconfig
+
 }
