@@ -2,7 +2,7 @@
 
 PKG_NAME="lzo"
 PKG_VER="2.10"
-PKG_DESC=""
+PKG_DESC="lzop is a file compressor which uses LZO for compression services. It is very similar to gzip - its main advantages over gzip are much higher compression and decompression speed."
 LICENSE=( GPLv2 )
 URL=( http://www.oberhumer.com/opensource/lzo )
 SOURCES=( http://www.oberhumer.com/opensource/lzo/download/${PKG_NAME}-${PKG_VER}.tar.gz )
