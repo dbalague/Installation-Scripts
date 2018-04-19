@@ -33,7 +33,7 @@ prepare_pkg(){
 ###################################################################
 config_and_build_pkg(){
     
-    cd ${PKG_SRC}/${DIR}/squash-tools
+    cd ${PKG_SRC}/${DIR}/squashfs-tools
     $CFLAGS make
 
 }
@@ -42,7 +42,7 @@ config_and_build_pkg(){
 ###################################################################
 install_pkg()
 {
-    cd ${PKG_SRC}/${DIR}/squash-tools
+    cd ${PKG_SRC}/${DIR}/squashfs-tools
     install -d $PREFIX/bin
     install -Dm755 mksquashfs ${PREFIX}/bin/mksquashfs
     install -m755 unsquashfs ${PREFIX}/bin/unsquashfs
