@@ -1,6 +1,6 @@
 # BUILDER FILE
 
-PKG_NAME="squashfs"
+PKG_NAME="squashfs-tools"
 PKG_VER="4.3"
 PKG_DESC="Squashfs is a highly compressed read-only filesystem for Linux. Squashfs compresses both files, inodes and directories, and supports block sizes up to 1Mbytes for greater compression. It is implemented as a kernel module under VFS."
 LICENSE=( GPLv2 )
@@ -16,15 +16,8 @@ PKG_TYPE="core"
 ###################################################################
 prepare_pkg(){
 
-    DIR=${PKG_NAME}${PKG_VER}
+    DIR=${PKG_NAME%-*}${PKG_VER}
 
-    # Setup Make flags
-    XZ_SUPPORT=1
-    LZO_SUPPORT=1
-    LZMA_XZ_SUPPORT=1
-    LZ4_SUPPORT=1
-    ZSTD_SUPPORT=1
-    
 }
 
 ###################################################################
@@ -33,7 +26,7 @@ prepare_pkg(){
 config_and_build_pkg(){
     
     cd ${PKG_SRC}/${DIR}/squashfs-tools
-    CFLAGS="$CFLAGS -O2" make
+    CFLAGS="$CFLAGS -O2" make XZ_SUPPORT=1 LZO_SUPPORT=1 LZMA_XZ_SUPPORT=1 LZ4_SUPPORT=1 ZSTD_SUPPORT=1 
 
 }
 ###################################################################
