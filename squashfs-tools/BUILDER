@@ -24,7 +24,6 @@ prepare_pkg(){
     LZMA_XZ_SUPPORT=1
     LZ4_SUPPORT=1
     ZSTD_SUPPORT=1
-    CFLAGS="$CFLAGS -O2"
     
 }
 
@@ -34,7 +33,7 @@ prepare_pkg(){
 config_and_build_pkg(){
     
     cd ${PKG_SRC}/${DIR}/squashfs-tools
-    $CFLAGS make
+    CFLAGS="$CFLAGS -O2" make
 
 }
 ###################################################################
