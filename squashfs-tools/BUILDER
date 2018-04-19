@@ -1,0 +1,50 @@
+# BUILDER FILE
+
+PKG_NAME="squashfs"
+PKG_VER="4.3"
+PKG_DESC="Squashfs is a highly compressed read-only filesystem for Linux. Squashfs compresses both files, inodes and directories, and supports block sizes up to 1Mbytes for greater compression. It is implemented as a kernel module under VFS."
+LICENSE=( GPLv2 )
+URL=( https://sourceforge.net/projects/squashfs/ )
+SOURCES=( https://sourceforge.net/projects/squashfs/files/squashfs/squashfs4.3/squashfs4.3.tar.gz )
+MD5SUM=( d92ab59aabf5173f2a59089531e30dbf )
+DEPENDENCIES=( zlib xz zstd lzo lz4 )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for compilation
+###################################################################
+prepare_pkg(){
+
+    DIR=${PKG_NAME}${PKG_VER}
+
+    # Setup Make flags
+    XZ_SUPPORT=1
+    LZO_SUPPORT=1
+    LZMA_XZ_SUPPORT=1
+    LZ4_SUPPORT=1
+    ZSTD_SUPPORT=1
+    CFLAGS="$CFLAGS -O2"
+    
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd ${PKG_SRC}/${DIR}/squash-tools
+    $CFLAGS make
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd ${PKG_SRC}/${DIR}/squash-tools
+    install -d $PREFIX/bin
+    install -Dm755 mksquashfs ${PREFIX}/bin/mksquashfs
+    install -m755 unsquashfs ${PREFIX}/bin/unsquashfs
+
+}
