@@ -6,7 +6,6 @@ PKG_DESC="zstd is a fast lossless compression algorithm, targeting real-time com
 LICENSE=( "BSD GPL2" )
 URL=( "http://www.zstd.net" )
 SOURCES=( https://github.com/facebook/zstd/archive/v${PKG_VER}.tar.gz 
-https://git.archlinux.org/svntogit/packages.git/plain/trunk/0001-Only-load-extra-table-positions-for-CDicts.patch?h=packages/zstd )
 MD5SUM=( 10bf0353e3dedd8bae34a188c25d4261 )
 DEPENDENCIES=( zlib xz lz4 )
 MAKE_DEPENDENCIES=( )
