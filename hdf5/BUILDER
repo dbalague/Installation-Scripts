@@ -1,0 +1,62 @@
+# BUILDER FILE
+
+PKG_NAME="hdf5"
+PKG_VER="1.10.1"
+PKG_DESC="HDF5 is a data model, library, and file format for storing and managing data."
+LICENSE=( BSD-like )
+URL="https://www.hdfgroup.org"
+SOURCES=( https://support.hdfgroup.org/ftp/HDF5/current/src/${PKG_NAME}-${VER}.tar.bz2 )
+MD5SUM=( d89893c05ee7ea8611b51bb39450d64e )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="mpi"
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg()
+{
+    # Override the default DIR directory
+    cd PKG_SRC/$DIR
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+
+    # Compile CXX version first
+    mkdir build_cxx
+    cd build_cxx
+     ../configure --enable-direct-vfd --enable-build-mode=production --enable-cxx --prefix=$PREFIX
+    make
+    make check
+    
+    # Compile C and Fortran versions with parallel support
+    mkdir build_parallel
+    cd build_parallel
+    ../configure --enable-parallel --enable-direct-vfd --enable-build-mode=production --enable-fortran --prefix=$PREFIX
+    make
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    # Install CXX version
+    cd $PKG_SRC/$DIR
+    cd build_cxx
+    make install
+
+    # Install C and Fortran  versions
+    cd $PKG_SRC/$DIR
+    cd build_parallel
+    make install
+
+}
