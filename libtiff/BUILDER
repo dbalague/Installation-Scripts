@@ -1,0 +1,55 @@
+# BUILDER FILE
+
+PKG_NAME="libtiff"
+PKG_VER="4.0.9"
+PKG_DESC=""
+LICENSE=( BSD-like )
+URL="simplesystems.org/libtiff"
+SOURCES=( http://download.osgeo.org/${PKG_NAME}/${PKG_NAME#lib}-${PKG_VER}.tar.gz )
+MD5SUM=( 54bad211279cc93eb4fca31ba9bfdc79 )
+DEPENDENCIES=( xz libjpeg-turbo )
+MAKE_DEPENDENCIES=( cmake )
+PKG_TYPE="core"
+
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg()
+{
+    # Override the default DIR directory
+    DIR=${PKG_NAME#lib}-${PKG_VER}
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static \
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+    find examples -name "Makefile*" -exec rm {} \;
+    install -v -m755 -d ${PREFIX}/doc/${PKG_NAME}-${PKG_VER}
+    cp -v -R examples   ${PREFIX}/doc/${PKG_NAME}-${PKG_VER}
+
+}
