@@ -17,9 +17,9 @@ PKG_TYPE="mpi"
 ###################################################################
 prepare_pkg()
 {
-    # Override the default DIR directory
     cd PKG_SRC/$DIR
     
+    # Reconfigure htslib to avoid compilation error
     cd ext/htslib
     autoreconf
 }
