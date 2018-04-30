@@ -2,7 +2,7 @@
 
 PKG_NAME="libtiff"
 PKG_VER="4.0.9"
-PKG_DESC=""
+PKG_DESC="This software provides support for the Tag Image File Format (TIFF), a widely used format for storing image data."
 LICENSE=( BSD-like )
 URL="simplesystems.org/libtiff"
 SOURCES=( http://download.osgeo.org/${PKG_NAME}/${PKG_NAME#lib}-${PKG_VER}.tar.gz )
