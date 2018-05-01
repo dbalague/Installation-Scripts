@@ -1,12 +1,13 @@
 # BUILDER FILE
 
 PKG_NAME="hdf5"
-PKG_VER="1.10.1"
+PKG_VER="1.10.2"
 PKG_DESC="HDF5 is a data model, library, and file format for storing and managing data."
 LICENSE=( BSD-like )
 URL="https://www.hdfgroup.org"
-SOURCES=( https://support.hdfgroup.org/ftp/HDF5/current/src/${PKG_NAME}-${VER}.tar.bz2 )
-MD5SUM=( d89893c05ee7ea8611b51bb39450d64e )
+SHORT_VER=${PKG_VER%.*}
+SOURCES=( https://support.hdfgroup.org/ftp/HDF5/releases/hdf5-${SHORT_VER}/hdf5-${PKG_VER}/src/hdf5-${PKG_VER}.tar.gz )
+MD5SUM=( 41fb9347801b546fba323523a1c1af51 )
 DEPENDENCIES=( )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="mpi"
