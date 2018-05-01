@@ -1,0 +1,42 @@
+# BUILDER FILE
+# MAINTAINER: Daniel Balague
+
+PKG_NAME="libtool"
+PKG_VER="2.4.6"
+PKG_DESC="GNU libtool is a generic library support script. Libtool hides the complexity of using shared libraries behind a consistent, portable interface."
+LICENSE=( GNU )
+URL="http://www.gnu.org/software/libtool/"
+SHORT_VER=${VER%.*}
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${VER}.tar.xz )
+MD5SUM=( 1bfb9b923f2c1339b4d2ce1807064aa5 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}

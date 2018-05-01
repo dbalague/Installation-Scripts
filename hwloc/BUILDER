@@ -1,0 +1,46 @@
+# BUILDER FILE
+# MAINTAINER: Daniel Balague
+
+PKG_NAME="hwloc"
+PKG_VER="2.0.1"
+PKG_DESC="The Portable Hardware Locality (hwloc) software package provides a portable abstraction (across OS, versions, architectures, ...) of the hierarchical topology of modern architectures, including NUMA memory nodes, sockets, shared caches, cores and simultaneous multithreading."
+LICENSE=( BSD )
+URL="https://www.open-mpi.org/projects/hwloc/"
+SHORT_VER=${VER%.*}
+SOURCES=( https://www.open-mpi.org/software/${PKG_NAME}/v${SHORT_VER}/downloads/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 1ed57263e93becf2b95ef31668ba98bb )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( autoconf automake libtool )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-debug \
+                --enable-shared \
+                --enable-static \
+                --without-x
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
