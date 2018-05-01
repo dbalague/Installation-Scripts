@@ -9,7 +9,7 @@ URL="https://www.open-mpi.org"
 SHORT_VER=${VER%.*}
 SOURCES=( https://www.open-mpi.org/software/ompi/v${SHORT_VER}/downloads/${PKG_NAME}-${PKG_VER}.tar.gz )
 MD5SUM=( 7e4a7d4376f717e12f5abdc3e17ef5f5 )
-DEPENDENCIES=( hwlock )
+DEPENDENCIES=( hwloc )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="compiler"
 
