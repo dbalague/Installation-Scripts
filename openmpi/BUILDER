@@ -1,0 +1,64 @@
+# BUILDER FILE
+# MAINTAINER: Daniel Balague
+
+PKG_NAME="openmpi"
+PKG_VER="3.0.1"
+PKG_DESC="The Open MPI Project is an open source Message Passing Interface implementation that is developed and maintained by a consortium of academic, research, and industry partners."
+LICENSE=( BSD )
+URL="https://www.open-mpi.org"
+SHORT_VER=${VER%.*}
+SOURCES=( https://www.open-mpi.org/software/ompi/v${SHORT_VER}/downloads/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 7e4a7d4376f717e12f5abdc3e17ef5f5 )
+DEPENDENCIES=( hwlock )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="compiler"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --enable-shared \
+                --enable-mpi-thread-multiple \
+                --with-verbs \
+                --enable-mpirun-prefix-by-default \
+                --with-hwloc=$EBROOTHWLOC \
+                --without-ucx
+    
+    # Compile the package
+    make -j 36
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
+
+###################################################################
+# Post Installation
+###################################################################
+post_install()
+{
+    # Modify module file to add the mpi compilers when loading the module
+
+    sed -e "\$apushenv(\"CC\",\"mpicc\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
+    sed -e "\$apushenv(\"CXX\",\"mpicxx\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
+    sed -e "\$apushenv(\"FC\",\"mpifort\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
+    sed -e "\$apushenv(\"MPICC\",\"mpicc\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
+    sed -e "\$apushenv(\"MPICXX\",\"mpicxx\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
+    sed -e "\$apushenv(\"MPIFORT\",\"mpifort\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
+
+}
