@@ -54,6 +54,7 @@ post_install()
 {
     # Modify module file to add the mpi compilers when loading the module
 
+    # Add environment variables to module file
     sed -e "\$apushenv(\"CC\",\"mpicc\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
     sed -e "\$apushenv(\"CXX\",\"mpicxx\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
     sed -e "\$apushenv(\"FC\",\"mpifort\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
@@ -61,4 +62,8 @@ post_install()
     sed -e "\$apushenv(\"MPICXX\",\"mpicxx\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
     sed -e "\$apushenv(\"MPIFORT\",\"mpifort\")" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
 
+    # Add hirearchy for MPI modules
+    sed -e "\$alocal mpath = pathJoin(\"/usr/local/share/modulefiles/MPI\", compilerV, pkgName, pkgV)" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
+
+    sed -e "\$aprepend_path(\"MODULEPATH\", mpath)" -i ${MODULEFILE_PATH}/Compiler/${COMPILER}/${COMPILER_VER}/${PKG_NAME}/${PKG_VER}.lua
 }
