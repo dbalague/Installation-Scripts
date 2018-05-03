@@ -1,0 +1,54 @@
+# BUILDER FILE
+
+PKG_NAME="cmake"
+PKG_VER="3.10.2"
+PKG_DESC="CMake is an open-source, cross-platform family of tools designed to build, test and package software."
+LICENSE=( BSD )
+URL="https://cmake.org"
+SHORT_VER=${PKG_VER%.*}
+SOURCES=( https://cmake.org/files/v${SHORT_VER}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 732808e17fc14dc8cee50d51518c34eb )
+DEPENDENCIES=( libuv )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="compiler"
+
+###################################################################
+# Prepare Package
+###################################################################
+prepare_pkg()
+{
+    cd $PKG_SRC/$DIR
+    
+    # This command disables applications using cmake from attempting to install files in /usr/lib64/
+    sed -i '/"lib64"/s/64//' Modules/GNUInstallDirs.cmake
+
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}

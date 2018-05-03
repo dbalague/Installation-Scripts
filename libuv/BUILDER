@@ -1,0 +1,51 @@
+# BUILDER FILE
+
+PKG_NAME="libuv"
+PKG_VER="1.19.1"
+PKG_DESC="libuv is a multi-platform support library with a focus on asynchronous I/O. It was primarily developed for use by Node.js, but it's also used by Luvit, Julia, pyuv, and others."
+LICENSE=( MIT )
+URL="http://libuv.org"
+SOURCES=( https://github.com/libuv/libuv/archive/v${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( f69deb537239af334698101b4ea02d7b )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( automake autoconf libtool pkg-config )
+PKG_TYPE="core"
+
+
+###################################################################
+# Prepare the Package
+###################################################################
+prepare_pkg(){
+    cd $PKG_SRC/$DIR
+    sh autogen.sh
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
