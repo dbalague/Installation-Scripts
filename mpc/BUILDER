@@ -47,7 +47,7 @@ install_pkg()
 
     # Install a PC File
     sed -e "s:PREFIX:$PREFIX:" -i ../mpc.pc
-    sed "s:@VERSION@:${PKG_VER}:g" -i ../mpc.pc
+    sed -e "s:@VERSION@:${PKG_VER}:g" -i ../mpc.pc
 
     install -d ${PREFIX}/lib/pkgconfig
     install -m644 ${PKG_SRC}/mpc.pc ${PREFIX}/lib/pkgconfig
