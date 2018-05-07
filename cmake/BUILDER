@@ -8,7 +8,7 @@ URL="https://cmake.org"
 SHORT_VER=${PKG_VER%.*}
 SOURCES=( https://cmake.org/files/v${SHORT_VER}/${PKG_NAME}-${PKG_VER}.tar.gz )
 MD5SUM=( 732808e17fc14dc8cee50d51518c34eb )
-DEPENDENCIES=( libuv )
+DEPENDENCIES=( )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="compiler"
 
