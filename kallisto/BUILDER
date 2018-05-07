@@ -33,7 +33,7 @@ config_and_build_pkg(){
     mkdir build && cd build
 
     # Configure Package
-    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX .
+    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX ..
     
     # Compile the package
     make
