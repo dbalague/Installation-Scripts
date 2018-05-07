@@ -32,7 +32,10 @@ config_and_build_pkg(){
     cd $PKG_SRC/$DIR
     
     # Configure Package
-    ./configure --prefix=$PREFIX \
+    ./configure --prefix=$PREFIX              \
+                --parallel=4                  \
+                --no-system-libs              \
+                --mandir=${PREFIX}/share/man  \
                 --docdir=$PREFIX/share/doc/${PKG_NAME}-${PKG_VER}
     
     # Compile the package
