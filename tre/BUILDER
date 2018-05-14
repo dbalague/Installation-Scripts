@@ -18,7 +18,7 @@ PKG_TYPE="core"
 prepare_pkg(){
 
     cd $PKG_SRC/$DIR
-    ./utils/autogen.sh
+#    ./utils/autogen.sh
 
 }
 ###################################################################
