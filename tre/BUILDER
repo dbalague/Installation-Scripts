@@ -1,0 +1,52 @@
+# BUILDER FILE
+
+PKG_NAME="tre"
+PKG_VER="0.8.0"
+PKG_DESC="TRE is a lightweight, robust, and efficient POSIX compliant regexp matching library with some exciting features such as approximate (fuzzy) matching."
+LICENSE=( BSD )
+URL="https://laurikari.net/tre/"
+SOURCES=( http://laurikari.net/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 2fd70fa65cb8e5d6b6b99f6e4a4b8913 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+
+###################################################################
+# Prepare package for compilation
+###################################################################
+prepare_pkg(){
+
+    cd $PKG_SRC/$DIR
+    ./utils/autogen.sh
+
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX 
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
