@@ -1,0 +1,56 @@
+# BUILDER FILE
+
+PKG_NAME="bcl2fastq2"
+PKG_VER="2.20.0"
+PKG_DESC="The bcl2fastq2 Conversion Software v2.20.0 can be used to convert BCL files from MiniSeq, MiSeq, NextSeq, HiSeq, and NovaSeq sequening systems."
+LICENSE=( EULA )
+URL="https://www.illumina.com"
+DASHED_VER=${PKG_VER//\./-}
+SOURCES=( ftp://webdata2:webdata2@ussd-ftp.illumina.com/downloads/software/bcl2fastq/${PKG_NAME}-v${DASHED_VER}-tar.zip )
+MD5SUM=( 4dc99f1af208498b7279b66556329488 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare package for compilation
+###################################################################
+prepare_pkg(){
+
+    cd $PKG_SRC
+    TARFILE=$(ls *.tar.gz)
+    tar xf $TARFILE --directory $PREFIX/../source
+    DIR=${PREFIX}/../source
+
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR/src
+    mkdir build && cd build
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --parallel=12 \
+                --with-cmake=$(which cmake)
+    
+    # Compile the package
+    make -j 24
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR/src/build
+
+    # Install the package
+    make install
+
+}
