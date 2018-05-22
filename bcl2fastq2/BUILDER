@@ -36,7 +36,7 @@ prepare_pkg(){
 config_and_build_pkg(){
     
     cd $DIR/bcl2fastq/src
-    mkdir build && cd build
+    mkdir -p build && cd build
     
     # Configure Package
     ../configure --prefix=$PREFIX \
