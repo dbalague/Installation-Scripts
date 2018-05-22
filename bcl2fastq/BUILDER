@@ -1,5 +1,9 @@
 # BUILDER FILE
 
+# This package is self contained in terms of dependencies and picky with versions. 
+# If the dependencies' versions do not match the ones required by the package, then the package will compile them.
+# If you do not have cmake installed, just delete the --with-cmake flag from the configuration
+
 PKG_NAME="bcl2fastq2"
 PKG_VER="2.20.0"
 PKG_DESC="The bcl2fastq2 Conversion Software v2.20.0 can be used to convert BCL files from MiniSeq, MiSeq, NextSeq, HiSeq, and NovaSeq sequening systems."
