@@ -34,7 +34,7 @@ prepare_pkg(){
 ###################################################################
 config_and_build_pkg(){
     
-    cd $PKG_SRC/$DIR/src
+    cd $DIR/src
     mkdir build && cd build
     
     # Configure Package
@@ -53,7 +53,7 @@ config_and_build_pkg(){
 install_pkg()
 {
 
-    cd $PKG_SRC/$DIR/src/build
+    cd $DIR/src/build
 
     # Install the package
     make install
