@@ -23,8 +23,7 @@ prepare_pkg(){
 
     cd $PKG_SRC
     TARFILE=$(ls *.tar.gz)
-    mkdir -p ${PREFIX}
-    DIR=${PREFIX}/../source
+    DIR=${PREFIX}
     mkdir -p $DIR
     tar xf $TARFILE --directory $DIR
 
