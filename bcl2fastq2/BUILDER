@@ -35,7 +35,7 @@ prepare_pkg(){
 ###################################################################
 config_and_build_pkg(){
     
-    cd $DIR/src
+    cd $DIR/bcl2fastq/src
     mkdir build && cd build
     
     # Configure Package
@@ -54,7 +54,7 @@ config_and_build_pkg(){
 install_pkg()
 {
 
-    cd $DIR/src/build
+    cd $DIR/bcl2fastq/src/build
 
     # Install the package
     make install
