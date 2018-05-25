@@ -43,7 +43,7 @@ config_and_build_pkg(){
                 --with-cmake=$(which cmake)
     
     # Compile the package
-    make -j 24
+    make -j 12
 
 }
 
