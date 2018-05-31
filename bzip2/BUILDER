@@ -1,0 +1,69 @@
+# BUILDER FILE
+
+PKG_NAME="bzip2"
+PKG_VER="1.0.6"
+PKG_DESC="bzip2 is a freely available, patent free (see below), high-quality data compressor."
+LICENSE=( BSD-style )
+URL="http://www.bzip.org/"
+SOURCES=( http://www.bzip.org/${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.gz 
+          bzip2.pc )
+MD5SUM=( 00b516f4704d4a7cb50a1d97e6e8e15b 
+         119ebd2ad3273e1ae68392fd8c225646 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare package for configuration
+###################################################################
+prepare_pkg(){
+
+    cd $PKG_SRC/$DIR
+    # Make symbolic links relative
+    sed -i 's@\(ln -s -f \)$(PREFIX)/bin/@\1@' Makefile
+
+    # Man pages are installed in the correct location
+    sed -i "s@(PREFIX)/man@(PREFIX)/share/man@g" Makefile
+
+    # Prepare BZIP2 for compilation
+    make -f Makefile-libbz2_so # This creates a dynamic libbz2.so library
+    make clean
+
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make PREFIX=$PREFIX install
+
+    cp -v bzip2-shared $PREFIX/bin/bzip2
+    cp -av libbz2.so* $PREFIX/lib
+    ln -sv $PREFIX/lib/libbz2.so.1.0 $PREFIX/lib/libbz2.so
+    rm -v $PREFIX/bin/{bunzip2,bzcat}
+    ln -sv $PREFIX/bin/bzip2 $PREFIX/bin/bunzip2
+    ln -sv $PREFIX/bin/bzip2 $PREFIX/bin/bzca
+
+    # Install a PC File
+    sed -e "s:PREFIX:$PREFIX:" -i ${PKG_SRC}/${PKG_NAME}.pc
+    sed -e "s:@VERSION@:${PKG_VER}:g" -i ${PKG_SRC}/${PKG_NAME}.pc
+    install -d ${PREFIX}/lib/pkgconfig
+    install -m644 ${PKG_SRC}/${PKG_NAME}.pc ${PREFIX}/lib/pkgconfig
+
+}

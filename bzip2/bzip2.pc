@@ -1,0 +1,10 @@
+prefix=PREFIX
+exec_prefix=${prefix}
+libdir=PREFIX/lib
+includedir=${prefix}/include
+
+Name: bzip2
+Description: bzip2 is a freely available, patent free, high-quality data compressor
+Version: @VERSION@
+Libs: -L${libdir} -lbz2
+Cflags: -I${includedir}
