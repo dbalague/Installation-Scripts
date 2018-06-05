@@ -1,0 +1,58 @@
+# BUILDER FILE
+
+PKG_NAME="nspr"
+PKG_VER="4.18"
+PKG_DESC="Netscape Portable Runtime (NSPR) provides a platform-neutral API for system level and libc-like functions."
+LICENSE=( MPL )
+URL="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSPR"
+SOURCES=( https://archive.mozilla.org/pub/nspr/releases/v${PKG_VER}/src/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 2a558f9aeb109bfb16d78bdc42033a1e )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg(){
+    
+    DIR=$DIR/${PKG_NAME}
+    cd $PKG_SRC/$DIR
+    
+    # This sed disables installing two unneeded scripts.
+    sed -ri 's#^(RELEASE_BINS =).*#\1#' pr/src/misc/Makefile.in
+
+    # This sed disables installing the static libraries.
+    sed -i 's#$(LIBRARY) ##' config/rules.mk 
+
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --with-mozilla \
+                --with-pthreads \
+                $([ $(uname -m) = x86_64 ] && echo --enable-64bit)
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
