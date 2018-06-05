@@ -15,7 +15,7 @@ PKG_TYPE="core"
 # Prepare Package for Configuration
 ###################################################################
 prepare_pkg(){
-    DIR=${PKG_NAME}-${VER}-stable
+    DIR=${PKG_NAME}-${PKG_VER}-stable
 }
 ###################################################################
 # Configure and Build Package
