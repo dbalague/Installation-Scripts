@@ -8,7 +8,7 @@ URL="http://www.mpfr.org"
 SOURCES=( http://www.mpfr.org/${PKG_NAME}-${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.xz 
           mpfr.pc ) 
 MD5SUM=( b8dd19bd9bb1ec8831a6a582a7308073 
-         4f4f2cd8edaf0949d4d0303b9dea2e2f )
+         3c24e03d189e2b9523d95922d27ff93f )
 DEPENDENCIES=( gmp )
 MAKE_DEPENDENCIES=( binutils )
 PKG_TYPE="core"
