@@ -47,12 +47,12 @@ post_install()
 {
     # Fix module file to adapt it to the texlive direcotry structure
     if [ "$AS_USER" = "true" ]; then
-        sed -e 's#,"bin")#,"bin/x86_64-linux")#" \
+        sed -e 's#,"bin")#,"bin/x86_64-linux")#' \
             -i ${USER_MODULEFILE_PATH}/${PKG_NAME}/${PKG_VER}.lua
     elif [ "$IN_BASE" = "true" ]; then
         echo "Module installed in base"
     else
-        sed -e 's#,"bin")#,"bin/x86_64-linux")#" \
+        sed -e 's#,"bin")#,"bin/x86_64-linux")#' \
             -i ${MODULEFILE_PATH}/${PKG_NAME}/${PKG_VER}.lua
     fi
 }
