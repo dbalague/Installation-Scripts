@@ -1,0 +1,58 @@
+# BUILDER FILE
+
+PKG_NAME="sqlite"
+PKG_VER="3.22.0"
+PKG_DESC="SQLite is a self-contained, high-reliability, embedded, full-featured, public-domain, SQL database engine."
+LICENSE=( "Public Domain" )
+URL="https://sqlite.org"
+YEAR="2018"
+TAR_VER="${PKG_VER//\./}0000"
+SOURCES=( https://sqlite.org/$YEAR/${PKG_NAME}-autoconf-${TAR_VER}.tar.gz )
+MD5SUM=( 96b5648d542e8afa6ab7ffb8db8ddc3d )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+preapre_pkg(){
+    DIR=${PKG_NAME}-autoconf-${TAR_VER}
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static \
+                --disable-static  \
+                --enable-fts5     \
+                CFLAGS="-g -O2                    \
+                -DSQLITE_ENABLE_FTS4=1            \
+                -DSQLITE_ENABLE_COLUMN_METADATA=1 \
+                -DSQLITE_ENABLE_UNLOCK_NOTIFY=1   \
+                -DSQLITE_ENABLE_DBSTAT_VTAB=1     \
+                -DSQLITE_SECURE_DELETE=1          \
+                -DSQLITE_ENABLE_FTS3_TOKENIZER=1"
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
