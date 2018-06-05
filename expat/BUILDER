@@ -1,0 +1,47 @@
+# BUILDER FILE
+
+PKG_NAME="expat"
+PKG_VER="2.2.5"
+PKG_DESC="A stream-oriented XML parser library written in C."
+LICENSE=( "Free software" )
+URL="https://libexpat.github.io"
+SOURCES=( http://prdownloads.sourceforge.net/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.bz2 )
+MD5SUM=( 789e297f547980fc9ecc036f9a070d49 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+    # Install documentation
+    install -v -dm755 ${PREFIX}/share/doc/${PKG_NAME}-${PKG_VER}
+    install -v -m644 doc/*.{html,png,css} ${PREFIX}/share/doc/${PKG_NAME}-${PKG_VER}
+
+}

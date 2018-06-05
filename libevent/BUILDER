@@ -1,0 +1,43 @@
+# BUILDER FILE
+
+PKG_NAME="libevent"
+PKG_VER="2.1.8"
+PKG_DESC="The libevent API provides a mechanism to execute a callback function when a specific event occurs on a file descriptor or after a timeout has been reached."
+LICENSE=( 3-clause_BSD )
+URL="http://libevent.org"
+SOURCES=( https://github.com/libevent/libevent/releases/download/release-${PKG_VER}-stable/${PKG_NAME}-${PKG_VER}-stable.tar.gz )
+MD5SUM=( f3eeaed018542963b7d2416ef1135ecc )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static
+    
+    # Compile the package
+    make 
+
+    make verify
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
