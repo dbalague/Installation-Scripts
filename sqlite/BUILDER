@@ -29,7 +29,6 @@ config_and_build_pkg(){
     # Configure Package
     ./configure --prefix=$PREFIX \
                 --disable-static \
-                --disable-static  \
                 --enable-fts5     \
                 CFLAGS="-g -O2                    \
                 -DSQLITE_ENABLE_FTS4=1            \
