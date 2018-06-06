@@ -6,7 +6,7 @@ PKG_DESC="Network Security Services (NSS) is a set of libraries designed to supp
 LICENSE=( "MPL 2.0" )
 URL="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS"
 PKG_VER_=${PKG_VER/\./_}
-SOURCES=( https://archive.mozilla.org/pub/security/nss/releases/NSS_${PKG_VER_}_RTM/src/${PKG_NAME}-${PKG_VER.tar.gz
+SOURCES=( https://archive.mozilla.org/pub/security/nss/releases/NSS_${PKG_VER_}_RTM/src/${PKG_NAME}-${PKG_VER}.tar.gz
           http://www.linuxfromscratch.org/patches/blfs/${BASE_VER}/nss-${PKG_VER}-standalone-1.patch )
 MD5SUM=( 9467ec9e65c5aeb3254a50250490f5f7 
          de42751a0a6d86d48e5d1cbb0e65096d )
@@ -50,7 +50,7 @@ install_pkg()
 
     cd $PKG_SRC/$DIR
 
-    cd /dist
+    cd dist
 
     install -v -m755 Linux*/lib/*.so              ${PREFIX}/lib
     install -v -m644 Linux*/lib/{*.chk,libcrmf.a} ${PREFIX}/lib
