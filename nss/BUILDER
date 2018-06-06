@@ -5,8 +5,8 @@ PKG_VER="3.35"
 PKG_DESC="Network Security Services (NSS) is a set of libraries designed to support cross-platform development of security-enabled client and server applications."
 LICENSE=( "MPL 2.0" )
 URL="https://developer.mozilla.org/en-US/docs/Mozilla/Projects/NSS"
-_PKG_VER=${PKG_VER/\./_}
-SOURCES=( https://archive.mozilla.org/pub/security/nss/releases/NSS_${_PKG_VER}_RTM/src/${PKG_NAME}-${PKG_VER.tar.gz
+PKG_VER_=${PKG_VER/\./_}
+SOURCES=( https://archive.mozilla.org/pub/security/nss/releases/NSS_${PKG_VER_}_RTM/src/${PKG_NAME}-${PKG_VER.tar.gz
           http://www.linuxfromscratch.org/patches/blfs/${BASE_VER}/nss-${PKG_VER}-standalone-1.patch )
 MD5SUM=( 9467ec9e65c5aeb3254a50250490f5f7 
          de42751a0a6d86d48e5d1cbb0e65096d )
@@ -33,7 +33,7 @@ config_and_build_pkg(){
     cd nss
 
     make -j1 BUILD_OPT=1                  \
-             NSPR_INCLUDE_DIR=/usr/include/nspr  \
+             NSPR_INCLUDE_DIR="$(pkg-config --variable=includedir nspr)"  \
              USE_SYSTEM_ZLIB=1                   \
              ZLIB_LIBS="$(pkg-config --libs zlib )" \
              NSS_ENABLE_WERROR=0                 \
