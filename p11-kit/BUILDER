@@ -1,0 +1,39 @@
+# BUILDER FILE
+
+PKG_NAME="p11-kit"
+PKG_VER="0.23.9"
+PKG_DESC="Provides a way to load and enumerate PKCS#11 modules. Provides a standard configuration setup for installing PKCS#11 modules in such a way that they're discoverable."
+LICENSE=( "p11-kit COPYING disclaimer" )
+URL="https://p11-glue.github.io/p11-glue/p11-kit.html"
+SOURCES=( https://github.com/p11-glue/${PKG_NAME}/releases/download/${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 5fcc836b0b7f7b834ff0998aed2aa9e6 )
+DEPENDENCIES=( libtasn1 libxslt )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+
+    ./configure --prefix=$PREFIX     \
+                --sysconfdir=$PREFIX/etc \
+                --with-trust-paths=$PREFIX/etc/pki/anchors &&
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
