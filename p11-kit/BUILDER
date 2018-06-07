@@ -7,7 +7,7 @@ LICENSE=( "p11-kit COPYING disclaimer" )
 URL="https://p11-glue.github.io/p11-glue/p11-kit.html"
 SOURCES=( https://github.com/p11-glue/${PKG_NAME}/releases/download/${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.gz )
 MD5SUM=( 5fcc836b0b7f7b834ff0998aed2aa9e6 )
-DEPENDENCIES=( libtasn1 libxslt )
+DEPENDENCIES=( libtasn1 libxslt libffi )
 MAKE_DEPENDENCIES=( )
 PKG_TYPE="core"
 
