@@ -52,6 +52,9 @@ install_pkg()
 
     cd dist
 
+    install -v -m755 ${PREFIX}/bin
+    install -v -m755 ${PREFIX}/lib
+    install -v -m755 ${PREFIX}/include
     install -v -m755 Linux*/lib/*.so              ${PREFIX}/lib
     install -v -m644 Linux*/lib/{*.chk,libcrmf.a} ${PREFIX}/lib
 
