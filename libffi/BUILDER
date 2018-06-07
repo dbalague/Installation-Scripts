@@ -16,6 +16,8 @@ PKG_TYPE="core"
 ###################################################################
 prepare_pkg(){
 
+    cd $PKG_SRC/$DIR
+
     # Modify the Makefile to install headers into the standard
     #  $PREFIX/include directory instead of $PREFIX/lib/libffi-3.2.1/include.
 
