@@ -1,0 +1,56 @@
+# BUILDER FILE
+
+PKG_NAME="libxslt"
+PKG_VER="1.1.32"
+PKG_DESC="Libxslt is the XSLT C library developed for the GNOME project. XSLT itself is a an XML language to define transformation for XML. Libxslt is based on libxml2 the XML C library developed for the GNOME project. It also implements most of the EXSLT set of processor-portable extensions functions and some of Saxon's evaluate and expressions extensions."
+LICENSE=( MIT )
+URL="http://xmlsoft.org/XSLT/"
+SOURCES=( http://xmlsoft.org/sources/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 1fc72f98e98bf4443f1651165f3aa146 )
+DEPENDENCIES=( libxml2 )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg(){
+    
+    cd ${PKG_SRC}/${DIR}
+
+    # this increases the recursion limit in libxslt.
+    # This is needed by some packages for their documentation.
+
+    sed -i s/3000/5000/ libxslt/transform.c doc/xsltproc.{1,xml}
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static \
+                --without-python
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install-am
+
+}

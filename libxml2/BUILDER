@@ -1,0 +1,44 @@
+# BUILDER FILE
+
+PKG_NAME="libxml2"
+PKG_VER="2.9.7"
+PKG_DESC="Libxml2 is the XML C parser and toolkit developed for the Gnome project (but usable outside of the Gnome platform), it is free software available under the MIT License."
+LICENSE=( MIT )
+URL="http://www.xmlsoft.org"
+SOURCES=( http://xmlsoft.org/sources/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 896608641a08b465098a40ddf51cefba )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static \
+                --with-history \
+                --without-icu \
+                --without-python
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
