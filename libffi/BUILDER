@@ -1,0 +1,56 @@
+# BUILDER FILE
+
+PKG_NAME="libffi"
+PKG_VER="3.2.1"
+PKG_DESC="The libffi library provides a portable, high level programming interface to various calling conventions. This allows a programmer to call any function specified by a call interface description at run-time."
+LICENSE=( "libffi liberal license" )
+URL="https://sourceware.org/libffi/"
+SOURCES=( ftp://sourceware.org/pub/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 83b89587607e3eb65c70d361f13bab43 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg(){
+
+    # Modify the Makefile to install headers into the standard
+    #  $PREFIX/include directory instead of $PREFIX/lib/libffi-3.2.1/include.
+
+    sed -e '/^includesdir/ s/$(libdir).*$/$(includedir)/' \
+        -i include/Makefile.in
+
+    sed -e '/^includedir/ s/=.*$/=@includedir@/' \
+        -e 's/^Cflags: -I${includedir}/Cflags:/' \
+        -i libffi.pc.in
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+
+    ./configure --prefix=$PREFIX     \
+                --sysconfdir=$PREFIX/etc \
+
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
