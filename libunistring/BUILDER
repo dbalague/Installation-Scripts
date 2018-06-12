@@ -1,0 +1,46 @@
+# BUILDER FILE
+# MAINTAINER: Daniel Balague
+
+PKG_NAME="libunistring
+PKG_VER="0.9.8"
+PKG_DESC="This library provides functions for manipulating Unicode strings and for manipulating C strings according to the Unicode standard."
+LICENSE=( GNU )
+URL="http://www.gnu.org/software/libunistring/"
+SHORT_VER=${PKG_VER%.*}
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.xz )
+MD5SUM=( 03c60d4f7a77e00a8b31220c0ec22601 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX \
+                --disable-static \
+                --docdir=$PREFIX/share/doc/libunistring-0.9.8 
+    
+    # Compile the package
+    make
+
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+
+}
