@@ -1,7 +1,7 @@
 # BUILDER FILE
 # MAINTAINER: Daniel Balague
 
-PKG_NAME="libunistring
+PKG_NAME="libunistring"
 PKG_VER="0.9.8"
 PKG_DESC="This library provides functions for manipulating Unicode strings and for manipulating C strings according to the Unicode standard."
 LICENSE=( GNU )
