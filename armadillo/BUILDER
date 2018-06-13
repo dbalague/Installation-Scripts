@@ -1,15 +1,15 @@
 # BUILDER FILE
 
-PKG_NAME="lapack"
-PKG_VER="3.8.0"
-PKG_DESC="LAPACK is written in Fortran 90 and provides routines for solving systems of simultaneous linear equations, least-squares solutions of linear systems of equations, eigenvalue problems, and singular value problems."
-LICENSE=( BSD )
-URL="http://www.netlib.org/lapack/index.html"
-SOURCES=( http://www.netlib.org/$PKG_NAME/${PKG_NAME}-${PKG_VER}.tar.gz )
-MD5SUM=( 96591affdbf58c450d45c1daa540dbd2 )
-DEPENDENCIES=( )
+PKG_NAME="armadillo"
+PKG_VER="8.500.1"
+PKG_DESC="Armadillo is a linear algebra software library for the C++ programming language. It aims to provide efficient and streamlined base calculations, while at the same time having a straightforward and easy-to-use interface."
+LICENSE=( "apache 2.0" )
+URL="http://arma.sourceforge.net"
+SOURCES=( http://sourceforge.net/projects/arma/files/${PKG_NAME}-${PKG_VER}.tar.xz )
+MD5SUM=( f5a3860b5adb59bb7a055f508cf4c185 )
+DEPENDENCIES=( lapack hdf5 )
 MAKE_DEPENDENCIES=( cmake )
-PKG_TYPE="compiler"
+PKG_TYPE="mpi"
 
 
 ###################################################################
@@ -31,12 +31,9 @@ config_and_build_pkg(){
 
     # Configure Package
     cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
-          -DCMAKE_BUILD_TYPE=Release \
-          -DCBLAS=ON \
-          -DLAPACKE=ON \
-          -DLAPACKE_WITH_TMG=ON \
-          -DUSE_OPTIMIZED_BLAS=ON \
-          -DUSE_OPTIMIZED_LAPACK=ON \
+          -Dmkl_rt_LIBRARY="" \
+          -DCMAKE_BUILD_TYPE="Release" \
+          -DBLAS_LIBRARY="$(pkg-config --variable=libdir)/libblas.so" \
           ..
     
     # Compile the package
