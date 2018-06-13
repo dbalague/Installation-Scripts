@@ -1,0 +1,59 @@
+# BUILDER FILE
+
+PKG_NAME="lapack"
+PKG_VER="3.8.0"
+PKG_DESC="LAPACK is written in Fortran 90 and provides routines for solving systems of simultaneous linear equations, least-squares solutions of linear systems of equations, eigenvalue problems, and singular value problems."
+LICENSE=( BSD )
+URL="http://www.netlib.org/lapack/index.html"
+SOURCES=( http://www.netlib.org/$PKG_NAME/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( 96591affdbf58c450d45c1daa540dbd2 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( cmake )
+PKG_TYPE="compiler"
+
+
+###################################################################
+# Prepare Package for Configuration
+###################################################################
+prepare_pkg()
+{
+    cd PKG_SRC/$DIR
+    
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    mkdir build && cd build
+
+    # Configure Package
+    cmake -DCMAKE_INSTALL_PREFIX=$PREFIX \
+          -DCBLAS=ON \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DLAPACKE=ON \
+          -DLAPACKE_WITH_TMG=ON \
+          -DUSE_OPTIMIZED_BLAS=ON \
+          -DUSE_OPTIMIZED_LAPACK=ON \
+          ..
+    
+    # Compile the package
+    make -j 32
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+
+    cd $PKG_SRC/$DIR
+    cd build
+
+    # Install the package
+    make install
+
+}
