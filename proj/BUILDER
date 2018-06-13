@@ -1,0 +1,40 @@
+# BUILDER FILE
+# MAINTAINER: Daniel Balague
+
+PKG_NAME="proj"
+PKG_VER="5.1.0"
+PKG_DESC="PROJ is a standard UNIX filter function which converts geographic longitude and latitude coordinates into cartesian coordinates (and vice versa), and it is a C API for software developers to include coordinate transformation in their own software."
+LICENSE=( MIT )
+URL="https://proj4.org"
+SOURCES=( "http://download.osgeo.org/${PKG_NAME}/${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.gz" )
+MD5SUM=( 68c46f6da7e4cd5708f83fe47af80db6 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( automake autoconf )
+PKG_TYPE="core"
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX
+    
+    # Compile the package
+    make
+
+    make check
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+}
