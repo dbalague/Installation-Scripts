@@ -1,0 +1,51 @@
+# BUILDER FILE
+
+PKG_NAME="make"
+PKG_VER="4.2.1"
+PKG_DESC="GNU Make is a tool which controls the generation of executables and other non-source files of a program from the program's source files."
+LICENSE=( GPLv3 )
+URL="http://www.gnu.org/software/make"
+SOURCES=( http://ftp.gnu.org/gnu/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.bz2 )
+MD5SUM=( 15b012617e7c44c0ed482721629577ac )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package
+###################################################################
+prepare_pkg(){
+
+    cd $PKG_SRC/$DIR
+    # work around an error caused by glibc-2.27
+    sed -i '211,217 d; 219,229 d; 232 d' glob/glob.c
+
+}
+
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Configure Package
+    ./configure --prefix=$PREFIX
+    
+    # Compile the package
+    make
+    
+    make check
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    make install
+}
