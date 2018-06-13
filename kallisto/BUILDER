@@ -17,7 +17,7 @@ PKG_TYPE="mpi"
 ###################################################################
 prepare_pkg()
 {
-    cd PKG_SRC/$DIR
+    cd $PKG_SRC/$DIR
     
     # Reconfigure htslib to avoid compilation error
     cd ext/htslib
