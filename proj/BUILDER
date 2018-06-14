@@ -1,17 +1,29 @@
 # BUILDER FILE
 # MAINTAINER: Daniel Balague
 
-PKG_NAME="proj"
+PKG_NAME="proj.4"
 PKG_VER="5.1.0"
+DATUMGRID_VER="1.7"
 PKG_DESC="PROJ is a standard UNIX filter function which converts geographic longitude and latitude coordinates into cartesian coordinates (and vice versa), and it is a C API for software developers to include coordinate transformation in their own software."
 LICENSE=( MIT )
 URL="https://proj4.org"
-SOURCES=( "https://download.osgeo.org/${PKG_NAME}/${PKG_NAME}-${PKG_VER}.tar.gz" )
-MD5SUM=( 68c46f6da7e4cd5708f83fe47af80db6 )
+PKG_NAME_=${PKG_NAME/.4}
+SOURCES=( "https://download.osgeo.org/${PKG_NAME_}/${PKG_NAME_}-${PKG_VER}.tar.gz"
+          "https://download.osgeo.org/${PKG_NAME_}/${PKG_NAME_}-datumgrid-${DATUMGRID_VER}.tar.gz" )
+MD5SUM=( 68c46f6da7e4cd5708f83fe47af80db6
+         6799bd8ac411b8a78724e34850c206c4 )
 DEPENDENCIES=( )
 MAKE_DEPENDENCIES=( automake autoconf )
 PKG_TYPE="core"
 
+###################################################################
+# Prepare Package
+###################################################################
+prepare_pkg(){
+    DIR=${PKG_NAME_}-${PKG_VER}
+    cd ${PKG_SRC}/${DIR}/nad
+    tar xf ../../${PKG_NAME_}-datumgrid-${DATUMGRID_VER}.tar.gz
+}
 ###################################################################
 # Configure and Build Package
 ###################################################################
