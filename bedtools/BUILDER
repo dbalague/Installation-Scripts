@@ -1,0 +1,42 @@
+# BUILDER FILE
+# MAINTAINER: Daniel Balague
+
+PKG_NAME="bedtools"
+PKG_VER="2.27.1"
+PKG_DESC="A powerful toolset for genome arithmetic."
+LICENSE=( GPLv2 )
+URL="https://bedtools.readthedocs.io/en/latest/index.html"
+SOURCES=( https://github.com/arq5x/bedtools2/releases/download/v${PKG_VER}/${PKG_NAME}-${PKG_VER}.tar.gz )
+MD5SUM=( ec87cf43735e15c69f13183c6aae00a6 )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package
+###################################################################
+prepare_pkg(){
+    DIR=bedtools2
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+    
+    cd $PKG_SRC/$DIR
+    
+    # Compile the package
+    make
+
+}
+
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd $PKG_SRC/$DIR
+
+    # Install the package
+    prefix=$PREFIX make install
+}
