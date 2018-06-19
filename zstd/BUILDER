@@ -19,6 +19,7 @@ config_and_build_pkg(){
     # Configure and Make
     cd ${PKG_SRC}/${DIR}
     make
+    make lib
     make zstdmt
     make -C contrib/pzstd
 
@@ -34,8 +35,5 @@ config_and_build_pkg(){
 install_pkg()
 {
     cd ${PKG_SRC}/${DIR}
-    make PREFIX=${PREFIX}
-    install -Dm755 zstdmt "${PREFIX}/bin/zstdmt"
-    install -Dm755 contrib/pzstd/pzstd "${PREFIX}/usr/bin/pzstd"
-    install -Dm644 LICENSE "${PREFIX}/share/licenses/$pkgname/LICENSE"
+    make install PREFIX=${PREFIX}
 }
