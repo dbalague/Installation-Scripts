@@ -14,17 +14,6 @@ MAKE_DEPENDENCIES=( )
 PKG_TYPE="core"
 
 ###################################################################
-# Prepare Package
-###################################################################
-prepare_pkg(){
-
-    cd ${PKG_SRC}/${DIR}
-
-    # Patch PC file
-    sed -e "s:@VERSION@:${PKG_VER}:g" -i ../udunits.pc
-
-}
-###################################################################
 # Configure and Build Package
 ###################################################################
 config_and_build_pkg(){
@@ -46,8 +35,9 @@ install_pkg()
     cd ${PKG_SRC}/${DIR}
     make install PREFIX=${PREFIX}
    
-    # Install the pc files
+    # Install a PC File
+    sed -e "s:PREFIX:$PREFIX:" -i ${PKG_SRC}/${PKG_NAME}.pc
+    sed -e "s:@VERSION@:${PKG_VER}:g" -i ${PKG_SRC}/${PKG_NAME}.pc
     install -d ${PREFIX}/lib/pkgconfig
-    install -m644 ${PKG_SRC}/udunits.pc ${PREFIX}/lib/pkgconfig
-    
+    install -m644 ${PKG_SRC}/${PKG_NAME}.pc ${PREFIX}/lib/pkgconfig 
 }
