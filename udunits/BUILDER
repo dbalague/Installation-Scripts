@@ -18,6 +18,8 @@ PKG_TYPE="core"
 ###################################################################
 prepare_pkg(){
 
+    cd ${PKG_SRC}/${DIR}
+
     # Patch PC file
     sed -e "s:@VERSION@:${PKG_VER}:g" -i ../udunits.pc
 
