@@ -1,0 +1,10 @@
+prefix=PREFIX
+exec_prefix=${prefix}
+libdir=PREFIX/lib
+includedir=${prefix}/include
+
+Name: udunits
+Description: API and utility for arithmetic manipulation of units of physical quantities
+Version: @VERSION@
+Libs: -L${libdir} -ludunits2 
+Cflags: -I${includedir}

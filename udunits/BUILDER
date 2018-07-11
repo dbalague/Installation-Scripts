@@ -1,0 +1,51 @@
+# BUILDER FILE
+
+PKG_NAME="udunits"
+PKG_VER="2.2.26"
+PKG_DESC="API and utility for arithmetic manipulation of units of physical quantities."
+LICENSE=( "Copyright 2014 University Corporation for Atmospheric Research and contributors. All rights reserved." )
+URL=( https://www.unidata.ucar.edu/software/udunits/ )
+SOURCES=( ftp://ftp.unidata.ucar.edu/pub/${PKG_NAME}//${PKG_NAME}-${PKG_VER}.tar.gz 
+          udunits.pc )
+MD5SUM=( 5803837c6019236d24a9c9795cc8b462 
+         0b80790efd404805304205c9d2d6cbdc )
+DEPENDENCIES=( )
+MAKE_DEPENDENCIES=( )
+PKG_TYPE="core"
+
+###################################################################
+# Prepare Package
+###################################################################
+prepare_pkg(){
+
+    # Patch PC file
+    sed -e "s:@VERSION@:${PKG_VER}:g" -i ../udunits.pc
+
+}
+###################################################################
+# Configure and Build Package
+###################################################################
+config_and_build_pkg(){
+
+    cd ${PKG_SRC}/${DIR}
+
+    ./configure --prefix=$PREFIX
+
+    make
+
+    make check
+
+}
+###################################################################
+# Install Package
+###################################################################
+install_pkg()
+{
+    cd ${PKG_SRC}/${DIR}
+    make install PREFIX=${PREFIX}
+   
+    # Install the pc files
+    install -d ${PREFIX}/lib/pkgconfig
+    install -m644 ${PKG_SRC}/udunits.pc ${PREFIX}/lib/pkgconfig
+    
+}
